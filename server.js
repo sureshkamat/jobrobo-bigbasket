@@ -2,9 +2,15 @@ const express=require('express');
 const {connection}=require('./utils/db')
 const bcrypt=require('bcrypt');
 const jwt=require("jsonwebtoken");
+const cors=require('cors');
 const app=express();
 app.use(express.json())
 const {UserModel}=require("./models/user.models");
+const {productRoutes}=require('./routes/product.route')
+
+app.use(cors({
+    origin:"*"
+}))
 
 
 app.get("/",(req,res)=>{
@@ -58,7 +64,7 @@ app.post("/login",async (req,res)=>{
 })
 
 
-
+app.use("/products",productRoutes);
 
 
 
