@@ -32,7 +32,7 @@ app.post("/signup",async (req,res)=>{
         });
         try{
             await user.save();
-            res.send("SignUp Successfully");
+            res.send({message:"SignUp Successfully",status:true});
         }
         catch(err){
             console.log(err);

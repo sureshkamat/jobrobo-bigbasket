@@ -1,4 +1,7 @@
-import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
+import {
+  Box, Button, Center, Flex, Input, Modal, ModalBody,
+  ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure
+} from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './App.css';
@@ -7,7 +10,19 @@ import Single from './component/single';
 function App() {
   const [data, setData] = useState([]);
   const [cart,setCart]=useState(0);
-
+  const [login,setLogin]=useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+ const [user,setUser]=useState();
+  const [signupdata,setSignUpData]=useState({
+    firstName:"",
+    lastName:"",
+    email:"",
+    password:""
+  })
+  const [logindata,setLoginData]=useState({
+    email:"",
+    password:""
+  })
   const getData = () => {
     axios.get('http://localhost:8081/products')
       .then((res) => {
@@ -19,14 +34,44 @@ function App() {
   useEffect(() => {
     getData();
   }, [])
+
+  const handleSignup=()=>{
+    axios.post('http://localhost:8081/signup',signupdata)
+    .then((res)=>{
+      if(res.data.status){
+        alert("SignUp Successfully now goto Login");
+        setLogin(!login);
+      }else{
+        alert("Something went wrong");
+      }
+    })
+    .catch((err)=>console.log(err));
+  }
+
+  const handleLogin=()=>{
+    axios.post('http://localhost:8081/login',logindata)
+    .then((res)=>{
+      if(res.data.token){
+        setUser(res.data.UserName);
+        alert("login Successfull");
+        onClose()
+      }else{
+        alert("Invalid Credentials");
+      }
+    })
+    .catch((err)=>console.log(err));
+  
+  }
   return (
     <div className="App">
       <Flex w='80%' m="auto" gap="5" mt='5'>
         <img src="https://www.bbassets.com/static/v2697/custPage/build/content/img/bb_logo.png" alt="logo"></img>
         <Input type="text" placeholder="Search products" />
         <Button>Cart {cart} </Button>
-        <Button>Login</Button>
-      </Flex>
+        {
+          user?<Button>{user}</Button>:<Button onClick={onOpen}>Login</Button>
+         }     
+          </Flex>
       <Box w='80%' m='auto' mt='20'>
         <Box>
           <Text fontSize='2xl'>Fresh Vegetables</Text>
@@ -101,6 +146,40 @@ function App() {
           </Flex>
         </Box>
       </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{login?"Login":"Sign Up"}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box>
+              {
+                login?<form>
+                <Input type='text' placeholder='Enter Email' isRequired onChange={(e)=>setLoginData({...logindata,email:e.target.value})} />
+                <Input type='password' placeholder='Enter Password' mt='5' isRequired onChange={(e)=>setLoginData({...logindata,password:e.target.value})} />
+                <Center mt='5'><Button onClick={handleLogin}>Login</Button></Center>
+              </form>
+              :
+              <form>
+                <Input type='text' placeholder='Enter First Name' isRequired onChange={(e)=>setSignUpData({...signupdata,firstName:e.target.value})} />
+                <Input type='text' placeholder='Enter Last Name' mt='3' onChange={(e)=>setSignUpData({...signupdata,lastName:e.target.value}) } />
+                <Input type='text' placeholder='Enter Email' mt='3'  isRequired onChange={(e)=>setSignUpData({...signupdata,email:e.target.value}) } />
+                <Input type='password' placeholder='Enter Password' mt='3' isRequired onChange={(e)=>setSignUpData({...signupdata,password:e.target.value}) }/>
+                <Center mt='5'><Button onClick={handleSignup}>Sign Up</Button></Center>
+              </form>
+              }
+              
+            </Box>  
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant='ghost' onClick={()=>setLogin(!login)}>{login?"Sign Up":"Login"}</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   );
 }
