@@ -1,20 +1,21 @@
 import {
-  Box, Button, Center, Flex, Grid,
+  Box, Button, Center, Flex,
   Icon,
   Input,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
   Modal, ModalBody,
-  ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure
+  ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
+  useDisclosure
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { ShoppingCart } from 'react-feather';
 import './App.css';
+import FrontView from './component/FrontView';
+import PopOverComponent from './component/PopOver';
 import Search from './component/Search';
-import Single from './component/single';
 
 function App() {
   const [data, setData] = useState([]);
@@ -53,6 +54,7 @@ function App() {
   const onOpenModal2 = () => {
     setIsOpenModal2(true);
   };
+  
   const getData = () => {
     axios.get('http://localhost:8081/products')
       .then((res) => {
@@ -109,6 +111,8 @@ function App() {
   return (
     <div className="App">
 
+    
+            
       <Flex w='90%' m="auto" gap="5" mt='5'>
         <img src="https://www.bbassets.com/static/v2697/custPage/build/content/img/bb_logo.png" alt="logo"></img>
         <Menu>
@@ -116,9 +120,13 @@ function App() {
             Shop by Category
           </MenuButton>
           <MenuList bg='black'>
-            <MenuItem bg='black' color='white' onClick={()=>setSearch("Fruits & Vegetables")}>Fruits & Vegetables</MenuItem>
-            <MenuItem bg='black' color='white' onClick={()=>setSearch("Foodgrains, Oil & Masala")}>Foodgrains, Oil & Masala</MenuItem>
-            <MenuItem bg='black' color='white' onClick={()=>setSearch("Bakery, Cakes & Dairy")}>Bakery, Cakes & Dairy</MenuItem>
+            <PopOverComponent category={"Fruits & Vegetables"} subcategory={["Fresh Vegetables","Herbs & Seasonings","Fresh Fruits"]} setSearch={setSearch} />
+            <PopOverComponent category={"Foodgrains, Oil & Masala"} subcategory={["Atta","Dals","Salts"]} setSearch={setSearch} />
+            <PopOverComponent category={"Bakery, Cakes & Dairy"} subcategory={["Dairy"]} setSearch={setSearch} />
+            <PopOverComponent category={"Beverages"} subcategory={["Energy & Soft Drinks","Water"]} setSearch={setSearch} />
+          
+            
+            {/* <MenuItem bg='black' color='white' onClick={() => setSearch("Beverages")}>Beverages</MenuItem> */}
           </MenuList>
         </Menu>
         <Input type="text" placeholder="Search products" w='50%' onChange={(e) => setSearch(e.target.value)} />
@@ -128,87 +136,17 @@ function App() {
         }
         {role === 'admin' && <Button onClick={onOpenModal2}>Add Products</Button>}
       </Flex>
+
       {search ? <Box w='80%' m='auto' mt='20' >
         <Search search={search} setCart={setCart} cart={cart} role={role} />
       </Box> :
         <Box w='80%' m='auto' mt='20'>
-          <Box>
-            <Text fontSize='2xl'>Fresh Vegetables</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
-              {
-                data.filter((el) => el.subcategory === 'Fresh Vegetables')
-                  .slice(0, 5)
-                  .map((el) => (
-                    <Single data={el} setCart={setCart} cart={cart} />
-                  ))
-              }
-            </Grid>
-          </Box>
-          <Box>
-            <Text fontSize='2xl'>Herbs & Seasonings</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
-
-              {
-                data.filter((el) => el.subcategory === 'Herbs & Seasonings')
-                  .slice(0, 5)
-                  .map((el) => (
-                    <Single data={el} setCart={setCart} cart={cart} />
-                  ))
-              }
-            </Grid>
-          </Box>
-          <Box>
-            <Text fontSize='2xl'>Fresh Fruits</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
-
-              {
-                data.filter((el) => el.subcategory === 'Fresh Fruits')
-                  .slice(0, 5)
-                  .map((el) => (
-                    <Single data={el} setCart={setCart} cart={cart} />
-                  ))
-              }
-            </Grid>
-          </Box>
-          <Box>
-            <Text fontSize='2xl'>Attas</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
-
-              {
-                data.filter((el) => el.subcategory === 'Atta')
-                  .slice(0, 5)
-                  .map((el) => (
-                    <Single data={el} setCart={setCart} cart={cart} />
-                  ))
-              }
-            </Grid>
-          </Box>
-          <Box>
-            <Text fontSize='2xl'>Dals</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
-
-              {
-                data.filter((el) => el.subcategory === 'Dals')
-                  .slice(0, 5)
-                  .map((el) => (
-                    <Single data={el} setCart={setCart} cart={cart} />
-                  ))
-              }
-            </Grid>
-          </Box>
-          <Box>
-            <Text fontSize='2xl'>Salts</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
-
-              {
-                data.filter((el) => el.subcategory === 'Salts')
-                  .slice(0, 5)
-                  .map((el) => (
-                    <Single data={el} setCart={setCart} cart={cart} />
-                  ))
-              }
-            </Grid>
-          </Box>
+          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Fresh Vegetables"}/>
+          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Herbs & Seasonings"}/>
+          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Fresh Fruits"}/>
+          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Atta"}/>
+          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Dals"}/>
+          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Salts"}/>
         </Box>
       }
 

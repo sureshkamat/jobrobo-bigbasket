@@ -22,7 +22,7 @@ const Search=({search,setCart,cart,role})=>{
     },[search])
     return(
         <Box>
-            <h1>Search Products {search}</h1>
+            <h1>Searched Products {search} Found {data.length}</h1>
         <Grid templateColumns={{ base: "repeat(1, 1fr)", sm:"repeat(2, 1fr)",md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)", xl: "repeat(4, 1fr)" }} gap={6}>
             {
                 data.map((el)=><Single data={el} setCart={setCart} cart={cart} role={role} getData={getData} />)
