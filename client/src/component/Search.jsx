@@ -2,7 +2,7 @@ import { Box, Grid } from "@chakra-ui/react";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Single from "./single";
-const Search=({search,setCart,cart})=>{
+const Search=({search,setCart,cart,role})=>{
     const [data,setData]=useState([]);
 
 
@@ -25,7 +25,7 @@ const Search=({search,setCart,cart})=>{
             <h1>Search Products {search}</h1>
         <Grid templateColumns='repeat(4, 1fr)' gap={6}>
             {
-                data.map((el)=><Single data={el} setCart={setCart} cart={cart} />)
+                data.map((el)=><Single data={el} setCart={setCart} cart={cart} role={role} getData={getData}/>)
             }
         </Grid>
         
