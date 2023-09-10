@@ -28,10 +28,30 @@ productRoutes.post("/add",async (req,res)=>{
 })
 
 productRoutes.get("/",async (req,res)=>{
-    const data=await ProductModel.find()
-    res.json({
-    data
-    })
+    try{
+        const {category,subcategory,search}=req.query;
+        const query={};
+        if(category) query.category=category;
+        if(subcategory) query.subcategory=subcategory;
+        if(search) {
+            const searchQuery=new RegExp(search,'i');
+            query.$or=[
+                {name:searchQuery },
+                {description:searchQuery},
+                {category:searchQuery},
+                {subcategory:searchQuery}
+            ];
+        }
+        
+        const data=await ProductModel.find(query);
+        res.json({
+            data
+        })
+    }
+    catch(err){
+        res.send({msg:"Error while Fetching All Products",error:err});
+    }
+
 })
 
 

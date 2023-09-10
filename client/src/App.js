@@ -5,6 +5,7 @@ import {
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './App.css';
+import Search from './component/Search';
 import Single from './component/single';
 
 function App() {
@@ -13,6 +14,8 @@ function App() {
   const [login,setLogin]=useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
  const [user,setUser]=useState();
+
+ const [search,setSearch]=useState();
   const [signupdata,setSignUpData]=useState({
     firstName:"",
     lastName:"",
@@ -66,12 +69,15 @@ function App() {
     <div className="App">
       <Flex w='80%' m="auto" gap="5" mt='5'>
         <img src="https://www.bbassets.com/static/v2697/custPage/build/content/img/bb_logo.png" alt="logo"></img>
-        <Input type="text" placeholder="Search products" />
+        <Input type="text" placeholder="Search products" onChange={(e)=>setSearch(e.target.value)}/>
         <Button>Cart {cart} </Button>
         {
           user?<Button>{user}</Button>:<Button onClick={onOpen}>Login</Button>
          }     
           </Flex>
+      {search?<Box w='80%' m='auto' mt='20'>
+      <Search search={search} setCart={setCart} cart={cart}/>
+      </Box>:
       <Box w='80%' m='auto' mt='20'>
         <Box>
           <Text fontSize='2xl'>Fresh Vegetables</Text>
@@ -146,6 +152,7 @@ function App() {
           </Flex>
         </Box>
       </Box>
+      }
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
