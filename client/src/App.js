@@ -1,7 +1,12 @@
 import {
   Box, Button, Center, Flex, Grid,
   Icon,
-  Input, Modal, ModalBody,
+  Input,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Modal, ModalBody,
   ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure
 } from '@chakra-ui/react';
 import axios from 'axios';
@@ -106,20 +111,30 @@ function App() {
 
       <Flex w='90%' m="auto" gap="5" mt='5'>
         <img src="https://www.bbassets.com/static/v2697/custPage/build/content/img/bb_logo.png" alt="logo"></img>
-        <Input type="text" placeholder="Search products" onChange={(e) => setSearch(e.target.value)} />
+        <Menu>
+          <MenuButton colorScheme='green' as={Button} >
+            Shop by Category
+          </MenuButton>
+          <MenuList bg='black'>
+            <MenuItem bg='black' color='white' onClick={()=>setSearch("Fruits & Vegetables")}>Fruits & Vegetables</MenuItem>
+            <MenuItem bg='black' color='white' onClick={()=>setSearch("Foodgrains, Oil & Masala")}>Foodgrains, Oil & Masala</MenuItem>
+            <MenuItem bg='black' color='white' onClick={()=>setSearch("Bakery, Cakes & Dairy")}>Bakery, Cakes & Dairy</MenuItem>
+          </MenuList>
+        </Menu>
+        <Input type="text" placeholder="Search products" w='50%' onChange={(e) => setSearch(e.target.value)} />
         <Button colorSchema='pink'><Icon as={ShoppingCart} w={6} h={6} color="blue.500" /> {cart} items </Button>
         {
           user ? <Button>{user}</Button> : <Button onClick={onOpen}>Login</Button>
         }
         {role === 'admin' && <Button onClick={onOpenModal2}>Add Products</Button>}
       </Flex>
-      {search ? <Box w='80%' m='auto' mt='20'>
+      {search ? <Box w='80%' m='auto' mt='20' >
         <Search search={search} setCart={setCart} cart={cart} role={role} />
       </Box> :
         <Box w='80%' m='auto' mt='20'>
           <Box>
             <Text fontSize='2xl'>Fresh Vegetables</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm:"repeat(2, 1fr)",md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
+            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
               {
                 data.filter((el) => el.subcategory === 'Fresh Vegetables')
                   .slice(0, 5)
@@ -131,8 +146,8 @@ function App() {
           </Box>
           <Box>
             <Text fontSize='2xl'>Herbs & Seasonings</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm:"repeat(2, 1fr)",md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
- 
+            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
+
               {
                 data.filter((el) => el.subcategory === 'Herbs & Seasonings')
                   .slice(0, 5)
@@ -144,8 +159,8 @@ function App() {
           </Box>
           <Box>
             <Text fontSize='2xl'>Fresh Fruits</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm:"repeat(2, 1fr)",md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
- 
+            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
+
               {
                 data.filter((el) => el.subcategory === 'Fresh Fruits')
                   .slice(0, 5)
@@ -157,8 +172,8 @@ function App() {
           </Box>
           <Box>
             <Text fontSize='2xl'>Attas</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm:"repeat(2, 1fr)",md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
- 
+            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
+
               {
                 data.filter((el) => el.subcategory === 'Atta')
                   .slice(0, 5)
@@ -170,8 +185,8 @@ function App() {
           </Box>
           <Box>
             <Text fontSize='2xl'>Dals</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm:"repeat(2, 1fr)",md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
- 
+            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
+
               {
                 data.filter((el) => el.subcategory === 'Dals')
                   .slice(0, 5)
@@ -183,8 +198,8 @@ function App() {
           </Box>
           <Box>
             <Text fontSize='2xl'>Salts</Text>
-            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm:"repeat(2, 1fr)",md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
- 
+            <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)" }} gap={6}>
+
               {
                 data.filter((el) => el.subcategory === 'Salts')
                   .slice(0, 5)
@@ -196,7 +211,7 @@ function App() {
           </Box>
         </Box>
       }
-      
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

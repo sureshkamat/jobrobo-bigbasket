@@ -34,3 +34,18 @@
     transform: rotate(360deg);
   }
 }
+/* Custom CSS for submenu positioning */
+.menu-submenu {
+  position: relative;
+}
+
+.menu-submenu .chakra-menu__menu-list {
+  position: absolute;
+  top: 0;
+  left: 100%; /* Position the submenu to the right */
+  display: none; /* Hide submenu by default */
+}
+
+.menu-submenu:hover .chakra-menu__menu-list {
+  display: block; /* Display submenu on hover */
+}
