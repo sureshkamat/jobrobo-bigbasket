@@ -10,7 +10,7 @@ const Search=({search,setCart,cart,role})=>{
         const params={
             search
         }
-        axios.get('http://localhost:8081/products',{params})
+        axios.get('https://misty-pike-leather-jacket.cyclic.app/products',{params})
         .then((res)=>{
             console.log(res);
             setData(res.data.data);

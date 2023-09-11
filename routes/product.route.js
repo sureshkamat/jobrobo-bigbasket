@@ -6,7 +6,6 @@ const productRoutes=Router();
 
 
 
-//post furniture Create
 productRoutes.post("/add",async (req,res)=>{
     try{
         const {name,price,quantity,category,subcategory,description,image}=req.body;
@@ -37,7 +36,6 @@ productRoutes.get("/",async (req,res)=>{
             const searchQuery=new RegExp(search,'i');
             query.$or=[
                 {name:searchQuery },
-                {description:searchQuery},
                 {category:searchQuery},
                 {subcategory:searchQuery}
             ];
@@ -55,6 +53,16 @@ productRoutes.get("/",async (req,res)=>{
 })
 
 
+productRoutes.delete("/delete/:id",async (req,res)=>{
+    try{
+        const id=req.params.id;
+        await ProductModel.findByIdAndDelete(id);
+        res.send({data:`Product Id ${id} is Deleted`});
+    }
+    catch(err){
+        res.send({msg:"Error while Deleting Single  Data",error:err});
+    }
+});
 
 
 

@@ -53,7 +53,7 @@ app.post("/login",async (req,res)=>{
         bcrypt.compare(password,hashed_password,function(err,result){
             if(result){
                     let token=jwt.sign({user_id:user._id},"Suresh")
-                    res.send({message:"login Successfull", token:token, UserName:user.firstName})
+                    res.send({message:"login Successfull", token:token, UserName:user.firstName,role:user.role})
             }
             else{
                 res.send("Invalid Credentials Login Failed");

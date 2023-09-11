@@ -3,7 +3,7 @@ import axios from 'axios';
 const Single=({data,setCart,cart,role,getData})=>{
     const handleDelete=(id)=>{
         console.log(id);
-        axios.delete(`http://localhost:8081/products/delete/${id}`)
+        axios.delete(`https://misty-pike-leather-jacket.cyclic.app/products/delete/${id}`)
         .then((res)=>{
             getData();
         })

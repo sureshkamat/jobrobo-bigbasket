@@ -56,7 +56,7 @@ function App() {
   };
   
   const getData = () => {
-    axios.get('http://localhost:8081/products')
+    axios.get('https://misty-pike-leather-jacket.cyclic.app/products')
       .then((res) => {
         console.log(res);
         setData(res.data.data);
@@ -69,7 +69,7 @@ function App() {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8081/signup', signupdata)
+    axios.post('https://misty-pike-leather-jacket.cyclic.app/signup', signupdata)
       .then((res) => {
         if (res.data.status) {
           alert("SignUp Successfully now goto Login");
@@ -83,7 +83,7 @@ function App() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8081/login', logindata)
+    axios.post('https://misty-pike-leather-jacket.cyclic.app/login', logindata)
       .then((res) => {
         if (res.data.token) {
           console.log(res);
@@ -100,7 +100,7 @@ function App() {
   }
   const handleAddProduct = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8081/products/add', addProduct)
+    axios.post('https://misty-pike-leather-jacket.cyclic.app/products/add', addProduct)
       .then((res) => {
         if (res.data.msg) {
           alert("Product Added Successfully");
@@ -108,6 +108,8 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
+  const uniqueCategory = [...new Set(data.map(item => item.category))]
+  console.log(uniqueCategory);
   return (
     <div className="App">
 
@@ -124,7 +126,7 @@ function App() {
             <PopOverComponent category={"Foodgrains, Oil & Masala"} subcategory={["Atta","Dals","Salts"]} setSearch={setSearch} />
             <PopOverComponent category={"Bakery, Cakes & Dairy"} subcategory={["Dairy"]} setSearch={setSearch} />
             <PopOverComponent category={"Beverages"} subcategory={["Energy & Soft Drinks","Water"]} setSearch={setSearch} />
-          
+            <PopOverComponent category={"Snacks & Branded Foods"} subcategory={["Biscuits & Cookies"]} setSearch={setSearch} />
             
             {/* <MenuItem bg='black' color='white' onClick={() => setSearch("Beverages")}>Beverages</MenuItem> */}
           </MenuList>
@@ -137,16 +139,15 @@ function App() {
         {role === 'admin' && <Button onClick={onOpenModal2}>Add Products</Button>}
       </Flex>
 
-      {search ? <Box w='80%' m='auto' mt='20' >
+      {search ? 
+      <Box w='80%' m='auto' mt='20' >
         <Search search={search} setCart={setCart} cart={cart} role={role} />
       </Box> :
         <Box w='80%' m='auto' mt='20'>
-          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Fresh Vegetables"}/>
-          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Herbs & Seasonings"}/>
-          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Fresh Fruits"}/>
-          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Atta"}/>
-          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Dals"}/>
-          <FrontView data={data} setCart={setCart} cart={cart} subcategory={"Salts"}/>
+          {
+            uniqueCategory.map((el)=><FrontView data={data} setCart={setCart} cart={cart} category={el}/>)
+          }
+          
         </Box>
       }
 
