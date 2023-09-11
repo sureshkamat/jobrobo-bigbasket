@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+<h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#dependencies">Dependencies</a></li>
+        <li><a href="#component-structure">Component Structure</a></li>
+        <li><a href="#state-variables">State Variables</a></li>
+        <li><a href="#api-calls">API Calls</a></li>
+        <li><a href="#user-authentication">User Authentication</a></li>
+        <li><a href="#product-management">Product Management</a></li>
+        <li><a href="#ui-components">UI Components</a></li>
+    </ol>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+    <h2>Dependencies <a name="dependencies"></a></h2>
+    <ul>
+        <li><code>@chakra-ui/react</code>: A popular UI library for styling React applications.</li>
+        <li><code>axios</code>: A library for making HTTP requests.</li>
+        <li><code>react</code> and <code>react-dom</code>: React library and DOM rendering.</li>
+        <li><code>react-feather</code>: Icons for React applications.</li>
+        <li><code>./App.css</code>: CSS styles for the application.</li>
+    </ul>
 
-## Available Scripts
+    <h2>Component Structure <a name="component-structure"></a></h2>
+    <p>The `App` component is the root component of the application. It consists of various UI elements and components for different functionalities.</p>
 
-In the project directory, you can run:
+    <h2>State Variables <a name="state-variables"></a></h2>
+    <ul>
+        <li><code>data</code>: An array that stores product data fetched from an external API.</li>
+        <li><code>cart</code>: A count of items added to the shopping cart.</li>
+        <li><code>login</code>: A boolean that tracks whether a user is logged in or not.</li>
+        <li><code>user</code>: Stores the username of the logged-in user.</li>
+        <li><code>role</code>: Stores the role of the logged-in user (e.g., "admin").</li>
+        <li><code>search</code>: Stores the search query entered by the user.</li>
+        <li><code>signupdata</code>: An object storing user registration data (first name, last name, email, password).</li>
+        <li><code>logindata</code>: An object storing user login data (email and password).</li>
+        <li><code>addProduct</code>: An object storing data for adding a new product (name, price, quantity, category, etc.).</li>
+        <li><code>isOpenModal2</code>: A boolean to control the visibility of the product addition modal.</li>
+    </ul>
 
-### `npm start`
+    <h2>API Calls <a name="api-calls"></a></h2>
+    <ul>
+        <li>The `getData` function makes an HTTP GET request to fetch product data from an external API and stores it in the `data` state variable.</li>
+        <li>The `handleSignup` function makes an HTTP POST request to register a new user with the provided signup data.</li>
+        <li>The `handleLogin` function makes an HTTP POST request to authenticate a user with the provided login data.</li>
+        <li>The `handleAddProduct` function makes an HTTP POST request to add a new product with the provided data.</li>
+    </ul>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    <h2>User Authentication <a name="user-authentication"></a></h2>
+    <ul>
+        <li>Users can log in or sign up through a modal dialog.</li>
+        <li>If the user successfully logs in, their username and role are stored in the state.</li>
+        <li>User authentication is handled using tokens (e.g., JWT) from the server.</li>
+    </ul>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    <h2>Product Management <a name="product-management"></a></h2>
+    <ul>
+        <li>Users with the "admin" role can add new products through a modal dialog.</li>
+        <li>Product data includes name, price, quantity, category, subcategory, description, and an image URL.</li>
+    </ul>
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    <h2>UI Components <a name="ui-components"></a></h2>
+    <ul>
+        <li>The UI consists of various elements, including buttons, input fields, and menus.</li>
+        <li>Users can search for products using a search input field.</li>
+        <li>Products are displayed by category, and unique categories are extracted from the data.</li>
+        <li>Icons and buttons are used for actions like opening the login/signup modal and adding products.</li>
+        <li>Chakra UI components are used for styling and UI elements.</li>
+    </ul>
