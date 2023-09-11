@@ -1,4 +1,5 @@
-<h2>Table of Contents</h2>
+<html>
+    <h2>Table of Contents</h2>
     <ol>
         <li><a href="#dependencies">Dependencies</a></li>
         <li><a href="#component-structure">Component Structure</a></li>
@@ -64,3 +65,4 @@
         <li>Icons and buttons are used for actions like opening the login/signup modal and adding products.</li>
         <li>Chakra UI components are used for styling and UI elements.</li>
     </ul>
+    </html>
